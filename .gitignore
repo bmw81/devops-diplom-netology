@@ -7,7 +7,7 @@ terraform.tfvars
 terraform.tfvars.json
 *.auto.tfvars
 *.auto.tfvars.json
-secret_key_for_bucket.txt
+*.txt
 
 # Kubeconfig
 kubeconfig

@@ -559,6 +559,34 @@ kubectl get servicemonitor -n monitoring | grep test-app
 3. Дашборды в grafana отображающие состояние Kubernetes кластера.
 4. Http доступ на 80 порту к тестовому приложению.
 5. Atlantis или terraform cloud или ci/cd-terraform
+
+`В качестве CI/CD системы я буду использовать GitHub Actions, так как ранее написанный код уже на GitHub. Это бесплатно для публичных репозиториев и идеально подходит для этой задачи`
+
+`Для работы пайплайна Terraform в Яндекс.Облаке ему понадобятся ключи доступа. Вместо того чтобы хранить их в коде, добавлю их как зашифрованные секреты в настройках репозитория на GitHub:`
+- На главной странице репозитория - Settings
+- Secrets and variables - Actions
+- New repository secret
+
+`Нужно добавить 3 секрета (для сервисного аккаунта, access_key и secret_key для S3-бакета):`
+- Имя секрета: YC_SERVICE_ACCOUNT_KEY_FILE
+- Значение: Содержимое файла с ключом сервисного аккаунта, который использовался для Terraform (~/.authorized_key.json). Весь JSON-объект.
+
+- Имя секрета: YC_S3_ACCESS_KEY
+- Значение: access_key для S3-бакета, который хранит состояние Terraform
+
+- Имя секрета: YC_S3_SECRET_KEY
+- Значение: Ваш secret_key для S3-бакета.
+
+`Также необходимо добавить логин и токен доступа к DockerHub:`
+- Зайти на https://hub.docker.com/settings/security
+- Personal access token
+- Generate new token
+- Имя: github-actions - Generate
+- Полученный токен добавить в Github Actions как значение с именем DOCKERHUB_TOKEN
+- Добавить в Github Actions секрет DOCKERHUB_USERNAME со значением: логин в DockerHub
+
+Скопируйте его — он покажется только один раз
+
 ---
 ### Установка и настройка CI/CD
 
