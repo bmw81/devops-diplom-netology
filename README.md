@@ -258,6 +258,8 @@ mkdir -p ~/.kube
 sudo cp /etc/kubernetes/admin.conf ~/.kube/config
 sudo chown $(id -u):$(id -g) ~/.kube/config
 ```
+[Файл конфигурации кластера](./02-infrastructure/config)
+
 `Проверка кластера:`
 ```
 kubectl get nodes
@@ -596,7 +598,7 @@ cd ~/git/git-diplom-yandexcloud
 mkdir -p .github/workflows
 nano .github/workflows/terraform.yml
 ```
-[Манифест terraform-pipeline](./.)
+`Манифест находится в папке .github/workflows. Важно импортировать все существующие ресурсы с их id (сеть, подсети, security groups, ВМ, NAT-инстанс, таблицу маршрутизации)`
 
 `Проверка:`
 ```
@@ -604,6 +606,8 @@ git add .
 git commit -m "Make some changes in files"
 git push origin main
 ```
+
+![Workflow Success](./img/workflow_ter_success.png)
 
 ---
 ### Установка и настройка CI/CD
@@ -627,7 +631,9 @@ git push origin main
 ```
 nano ~/git/git-diplom-yandexcloud/.github/workflows/deploy-app.yml
 ```
-[Манифест для pipeline приложения]()
+`Добавить в GitHub переменные DOCKERHUB_USERNAME, DOCKERHUB_TOKEN, KUBECONFIG`
+
+![Workflow test-app success](./img/workflow_test-app.png)
 
 ---
 ## Что необходимо для сдачи задания?
