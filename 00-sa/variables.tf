@@ -15,3 +15,9 @@ variable "default_zone" {
   type        = string
   default     = "ru-central1-a"
 }
+
+variable "service_account_key_file" {
+  description = "Path to service account key file"
+  type        = string
+  default     = "~/.authorized_key.json"
+}
