@@ -16,8 +16,8 @@ variable "default_zone" {
   default     = "ru-central1-a"
 }
 
-variable "service_account_key" {
-  description = "Service account key JSON"
+variable "service_account_key_file" {
+  description = "Path to service account key file"
   type        = string
-  sensitive   = true
+  default     = "~/.authorized_key.json"
 }

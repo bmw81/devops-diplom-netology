@@ -68,3 +68,18 @@ jobs:
         run: |
           cd 02-infrastructure
           terraform apply -auto-approve
+      
+      - name: Create service account key file
+        run: |
+          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE }}' > /tmp/authorized_key.json
+          echo "TF_VAR_service_account_key_file=/tmp/authorized_key.json" >> $GITHUB_ENV
+
+      - name: Terraform Init (Infrastructure)
+        run: |
+          cd 02-infrastructure
+          terraform init
+
+      - name: Terraform Apply (Infrastructure)
+        run: |
+          cd 02-infrastructure
+          terraform apply -auto-approve
