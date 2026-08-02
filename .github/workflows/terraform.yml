@@ -17,7 +17,7 @@ jobs:
       TF_VAR_cloud_id: "b1g1ap7lhncbl9q7crfn"
       TF_VAR_folder_id: "b1grbnd43egs57caqic6"
       TF_VAR_default_zone: "ru-central1-a"
-      TF_VAR_service_account_key: ${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE }}
+      TF_VAR_service_account_key_file: "/tmp/authorized_key.json"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
       - name: Create service account key file
         run: |
           echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE }}' > /tmp/authorized_key.json
-          echo "TF_VAR_service_account_key_file=/tmp/authorized_key.json" >> $GITHUB_ENV
+          chmod 600 /tmp/authorized_key.json
 
       - name: Terraform Init (Infrastructure)
         run: |
