@@ -79,6 +79,15 @@ jobs:
           cd 02-infrastructure
           terraform init
 
+      - name: Terraform Import (Infrastructure)
+        run: |
+          cd 02-infrastructure
+          terraform import yandex_vpc_network.develop devops || true
+          terraform import yandex_vpc_address.master_ip master-public-ip || true
+          terraform import yandex_vpc_subnet.subnet-a subnet-a || true
+          terraform import yandex_vpc_subnet.subnet-b subnet-b || true
+          terraform import yandex_vpc_subnet.subnet-d subnet-d || true
+
       - name: Terraform Apply (Infrastructure)
         run: |
           cd 02-infrastructure
