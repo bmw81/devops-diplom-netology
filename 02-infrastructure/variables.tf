@@ -14,5 +14,10 @@ variable "default_zone" {
   description = "Default zone"
   type        = string
   default     = "ru-central1-a"
-}# Trigger CI/CD
-# Trigger CI/CD
+}
+
+variable "service_account_key" {
+  description = "Service account key JSON"
+  type        = string
+  sensitive   = true
+}
