@@ -17,7 +17,6 @@ jobs:
       TF_VAR_cloud_id: "b1g1ap7lhncbl9q7crfn"
       TF_VAR_folder_id: "b1grbnd43egs57caqic6"
       TF_VAR_default_zone: "ru-central1-a"
-      TF_VAR_service_account_key_file: "/tmp/authorized_key.json"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,6 +26,12 @@ jobs:
         with:
           terraform_version: "1.8.0"
 
+      - name: Create service account key file
+        run: |
+          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE }}' > /tmp/authorized_key.json
+          chmod 600 /tmp/authorized_key.json
+          echo "TF_VAR_service_account_key_file=/tmp/authorized_key.json" >> $GITHUB_ENV
+
       - name: Setup Yandex Cloud CLI
         run: |
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
@@ -34,7 +39,6 @@ jobs:
 
       - name: Configure Yandex Cloud CLI
         run: |
-          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE }}' > /tmp/authorized_key.json
           yc config set service-account-key /tmp/authorized_key.json
           yc config set cloud-id ${{ env.TF_VAR_cloud_id }}
           yc config set folder-id ${{ env.TF_VAR_folder_id }}
@@ -43,6 +47,11 @@ jobs:
         run: |
           cd 00-sa
           terraform init
+
+      - name: Terraform Import (SA)
+        run: |
+          cd 00-sa
+          terraform import yandex_iam_service_account.sa_storage ajegs342e71f33sb1agl || true
 
       - name: Terraform Apply (SA)
         run: |
@@ -54,47 +63,6 @@ jobs:
           cd 01-storage
           terraform init
 
-      - name: Terraform Apply (Storage)
-        run: |
-          cd 01-storage
-          terraform apply -auto-approve
-
-      - name: Terraform Init (Infrastructure)
-        run: |
-          cd 02-infrastructure
-          terraform init
-
-      - name: Terraform Apply (Infrastructure)
-        run: |
-          cd 02-infrastructure
-          terraform apply -auto-approve
-      
-      - name: Create service account key file
-        run: |
-          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE }}' > /tmp/authorized_key.json
-          chmod 600 /tmp/authorized_key.json
-          echo "TF_VAR_service_account_key_file=/tmp/authorized_key.json" >> $GITHUB_ENV
-
-      - name: Terraform Init (Infrastructure)
-        run: |
-          cd 02-infrastructure
-          terraform init
-
-      - name: Terraform Apply (Infrastructure)
-        run: |
-          cd 02-infrastructure
-          terraform apply -auto-approve
-
-      - name: Terraform Import (SA)
-        run: |
-          cd 00-sa
-          terraform import yandex_iam_service_account.sa_storage ajegs342e71f33sb1agl || true
-      
-      - name: Terraform Apply (SA)
-        run: |
-          cd 00-sa
-          terraform apply -auto-approve
-
       - name: Terraform Import (Storage)
         run: |
           cd 01-storage
@@ -103,4 +71,14 @@ jobs:
       - name: Terraform Apply (Storage)
         run: |
           cd 01-storage
+          terraform apply -auto-approve
+
+      - name: Terraform Init (Infrastructure)
+        run: |
+          cd 02-infrastructure
+          terraform init
+
+      - name: Terraform Apply (Infrastructure)
+        run: |
+          cd 02-infrastructure
           terraform apply -auto-approve
