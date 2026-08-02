@@ -585,7 +585,25 @@ kubectl get servicemonitor -n monitoring | grep test-app
 - Полученный токен добавить в Github Actions как значение с именем DOCKERHUB_TOKEN
 - Добавить в Github Actions секрет DOCKERHUB_USERNAME со значением: логин в DockerHub
 
-Скопируйте его — он покажется только один раз
+`Добавить секрет KUBECONFIG (содержимое ~/.kube/config с мастер-ноды) в Github Actions для доступа к Kubernetes-кластеру и SSH_PUBLIC_KEY`
+
+![Github Secrets](./img/gh_secrets.png)
+
+
+`Создать манифест для terraform-pipeline:`
+```
+cd ~/git/git-diplom-yandexcloud
+mkdir -p .github/workflows
+nano .github/workflows/terraform.yml
+```
+[Манифест terraform-pipeline](./.)
+
+`Проверка:`
+```
+git add .
+git commit -m "Make some changes in files"
+git push origin main
+```
 
 ---
 ### Установка и настройка CI/CD
@@ -604,6 +622,12 @@ kubectl get servicemonitor -n monitoring | grep test-app
 1. Интерфейс ci/cd сервиса доступен по http.
 2. При любом коммите в репозиторие с тестовым приложением происходит сборка и отправка в регистр Docker образа.
 3. При создании тега (например, v1.0.0) происходит сборка и отправка с соответствующим label в регистри, а также деплой соответствующего Docker образа в кластер Kubernetes.
+
+`Создать workflow для приложения:`
+```
+nano ~/git/git-diplom-yandexcloud/.github/workflows/deploy-app.yml
+```
+[Манифест для pipeline приложения]()
 
 ---
 ## Что необходимо для сдачи задания?

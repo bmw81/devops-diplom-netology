@@ -34,7 +34,7 @@ resource "yandex_compute_instance" "vm-a" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/tf_ed25519.pub")}"
+    ssh-keys = "ubuntu:${var.ssh_public_key}"
     serial-port-enable = 1
   }
 
@@ -72,7 +72,7 @@ resource "yandex_compute_instance" "vm-b" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/tf_ed25519.pub")}"
+    ssh-keys = "ubuntu:${var.ssh_public_key}"
     serial-port-enable = 1
   }
 
@@ -108,7 +108,7 @@ resource "yandex_compute_instance" "vm-d" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/tf_ed25519.pub")}"
+    ssh-keys = "ubuntu:${var.ssh_public_key}"
     serial-port-enable = 1
   }
 

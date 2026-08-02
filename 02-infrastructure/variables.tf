@@ -22,4 +22,8 @@ variable "service_account_key_file" {
   default     = "~/.authorized_key.json"
 }
 
-# Trigger
+variable "ssh_public_key" {
+  description = "SSH public key for VMs"
+  type        = string
+  sensitive   = true
+}

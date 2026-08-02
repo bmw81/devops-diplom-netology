@@ -63,7 +63,7 @@ resource "yandex_compute_instance" "nat-instance" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/tf_ed25519.pub")}"
+    ssh-keys = "ubuntu:${var.ssh_public_key}"
     user-data = <<-EOF
       #cloud-config
       runcmd:
