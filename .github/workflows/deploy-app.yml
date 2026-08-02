@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'test-app/**'
-  push:
     tags:
       - 'v*.*.*'
 
