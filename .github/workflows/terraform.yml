@@ -89,6 +89,11 @@ jobs:
           terraform import yandex_vpc_subnet.subnet-d fl834a6l2icer16558j1 || true
           terraform import yandex_vpc_security_group.nat_sg enpab4oq9rfhm719a95u || true
           terraform import yandex_vpc_security_group.lan_sg enp9cdhg43j0e0ctaato || true
+          terraform import yandex_vpc_route_table.rt enp346iug9lqs2v9jlft || true
+          terraform import yandex_compute_instance.nat-instance fhmhk74a2h1a6i2ctnod || true
+          terraform import yandex_compute_instance.vm-a fhmcl3463t70bnit6lrc || true
+          terraform import yandex_compute_instance.vm-b epdiof3j6k8ml42b14ia || true
+          terraform import yandex_compute_instance.vm-d fv42nvda33j9kbihrfk7 || true
 
       - name: Terraform Apply (Infrastructure)
         run: |
