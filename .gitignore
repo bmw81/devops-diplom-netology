@@ -1,0 +1,30 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+secret_key_for_bucket.txt
+
+# Kubeconfig
+kubeconfig
+kubeconfig.*
+
+# Secrets
+*.pem
+*.key
+*.crt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

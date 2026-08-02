@@ -1,0 +1,36 @@
+all:
+  hosts:
+    vm-a:
+      ansible_host: <51.250.4.247_vm-a>
+      ip: <51.250.4.247_vm-a>
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/tf_ed25519
+    vm-b:
+      ansible_host: <192.168.20.32_vm-b>
+      ip: <192.168.20.32_vm-b>
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/tf_ed25519
+      ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -i ~/.ssh/tf_ed25519 ubuntu@51.250.4.247"'
+    vm-d:
+      ansible_host: <192.168.30.17_vm-d>
+      ip: <192.168.30.17>
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/tf_ed25519
+      ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -i ~/.ssh/tf_ed25519 ubuntu@51.250.4.247"'
+  children:
+    kube_control_plane:
+      hosts:
+        vm-a:
+    kube_node:
+      hosts:
+        vm-b:
+        vm-d:
+    etcd:
+      hosts:
+        vm-a:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}

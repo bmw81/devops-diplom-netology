@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        h1 { color: #4CAF50; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .info { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Test Application</h1>
+        <p>This is a test application for Kubernetes deployment</p>
+        <div class="info">
+            <h3>Application Info:</h3>
+            <ul>
+                <li><strong>Version:</strong> 1.0.0</li>
+                <li><strong>Environment:</strong> Kubernetes</li>
+                <li><strong>Status:</strong> Running</li>
+                <li><strong>Hostname:</strong> <span id="hostname">Loading...</span></li>
+            </ul>
+        </div>
+        <p style="margin-top: 20px; color: #666; font-size: 14px;">
+            Deployed with Kubernetes on Yandex Cloud
+        </p>
+    </div>
+    <script>
+        fetch('/hostname')
+            .then(response => response.text())
+            .then(data => document.getElementById('hostname').textContent = data)
+            .catch(() => document.getElementById('hostname').textContent = 'unknown');
+    </script>
+</body>
+</html>
