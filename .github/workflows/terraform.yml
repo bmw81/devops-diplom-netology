@@ -84,11 +84,11 @@ jobs:
           cd 02-infrastructure
           terraform import yandex_vpc_network.develop enp0gd9eai5qt8j8sqcm || true
           terraform import yandex_vpc_address.master_ip e9bs84p4dtpvaae4n84f || true
-          terraform import yandex_vpc_subnet.subnet-a e2lhht8o5sfeneck25vh || true
-          terraform import yandex_vpc_subnet.subnet-b e9blfq6nfrfooctaseiq || true
+          terraform import yandex_vpc_subnet.subnet-a e9blfq6nfrfooctaseiq || true
+          terraform import yandex_vpc_subnet.subnet-b e2lhht8o5sfeneck25vh || true
           terraform import yandex_vpc_subnet.subnet-d fl834a6l2icer16558j1 || true
-          terraform import yandex_vpc_security_group.nat_sg nat-sg || true
-          terraform import yandex_vpc_security_group.lan_sg lan-sg || true
+          terraform import yandex_vpc_security_group.nat_sg enpab4oq9rfhm719a95u || true
+          terraform import yandex_vpc_security_group.lan_sg enp9cdhg43j0e0ctaato || true
 
       - name: Terraform Apply (Infrastructure)
         run: |
